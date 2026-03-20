@@ -1,0 +1,2 @@
+[console_scripts]
+spotify-migrator = spotify_migrator.__main__:main
