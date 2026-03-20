@@ -42,7 +42,7 @@ pip install -e .
 
 ## Configuration
 
-### Option 1: Via la TUI (recommandé)
+### Via la TUI
 
 Lancez l'application et sélectionnez "Configuration" dans le menu pour saisir vos identifiants Spotify Developer.
 
@@ -50,27 +50,7 @@ Lancez l'application et sélectionnez "Configuration" dans le menu pour saisir v
 spotify-migrator
 ```
 
-### Option 2: Via les variables d'environnement
-
-Créez un fichier `.env` à la racine du projet:
-
-```bash
-cp .env.example .env
-```
-
-Éditez `.env`:
-
-```env
-SPOTIFY_SOURCE_CLIENT_ID=votre_client_id_source
-SPOTIFY_SOURCE_CLIENT_SECRET=votre_client_secret_source
-SPOTIFY_SOURCE_REDIRECT_URI=http://localhost:8080
-
-SPOTIFY_TARGET_CLIENT_ID=votre_client_id_target
-SPOTIFY_TARGET_CLIENT_SECRET=votre_client_secret_target
-SPOTIFY_TARGET_REDIRECT_URI=http://localhost:8080
-
-LOG_LEVEL=INFO
-```
+La configuration est stockée dans `~/.spotify_migrator/store/config.json`.
 
 ## Configuration Spotify Developer
 
@@ -227,8 +207,7 @@ spotify_playlist_migration/
 
 ## Considérations de sécurité
 
-- Tokens stockés dans `~/.spotify_migrator/` avec permissions 0o600
-- Secrets dans `.env` (ne pas commiter)
+- Configuration et tokens stockés dans `~/.spotify_migrator/` avec permissions 0o600
 - HTTPS recommandé pour les URIs de redirection
 
 ## Dépannage
