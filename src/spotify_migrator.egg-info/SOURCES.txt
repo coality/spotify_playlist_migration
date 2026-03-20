@@ -32,13 +32,8 @@ src/spotify_migrator/tui/screens/home.py
 src/spotify_migrator/tui/screens/logs.py
 src/spotify_migrator/tui/screens/migrate.py
 src/spotify_migrator/tui/screens/playlists.py
+src/spotify_migrator/tui/screens/setup.py
 src/spotify_migrator/tui/widgets/__init__.py
 src/spotify_migrator/tui/widgets/playlist_list.py
 src/spotify_migrator/tui/widgets/progress.py
 src/spotify_migrator/tui/widgets/status.py
-tests/test_auth.py
-tests/test_cli.py
-tests/test_client.py
-tests/test_config.py
-tests/test_migration.py
-tests/test_models.py

@@ -26,7 +26,7 @@ Ce projet permet de copier vos playlists Spotify entre deux comptes en utilisant
 
 ```bash
 # Cloner ou créer le répertoire
-cd spotify_migrator
+cd spotify_playlist_migration
 
 # Créer l'environnement virtuel
 python3 -m venv venv
@@ -35,22 +35,24 @@ source venv/bin/activate  # Linux/macOS
 
 # Installer les dépendances
 pip install -r requirements.txt
+
+# Installer le package en mode développement
+pip install -e .
 ```
 
-## Configuration Spotify Developer
+## Configuration
 
-### 1. Créer les applications Spotify
+### Option 1: Via la TUI (recommandé)
 
-1. Allez sur [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/)
-2. Cliquez sur "Create App"
-3. Remplissez le nom et la description
-4. Pour `Redirect URI`, entrez `http://localhost:8080`
-5. **Créez DEUX applications** : une pour le compte source, une pour le target
-6. Notez les `Client ID` et `Client Secret` pour chaque
+Lancez l'application et sélectionnez "Configuration" dans le menu pour saisir vos identifiants Spotify Developer.
 
-### 2. Configurer l'environnement
+```bash
+spotify-migrator
+```
 
-Copiez `.env.example` vers `.env` et remplissez les identifiants:
+### Option 2: Via les variables d'environnement
+
+Créez un fichier `.env` à la racine du projet:
 
 ```bash
 cp .env.example .env
@@ -70,6 +72,17 @@ SPOTIFY_TARGET_REDIRECT_URI=http://localhost:8080
 LOG_LEVEL=INFO
 ```
 
+## Configuration Spotify Developer
+
+### 1. Créer les applications Spotify
+
+1. Allez sur [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/)
+2. Cliquez sur "Create App"
+3. Remplissez le nom et la description
+4. Pour `Redirect URI`, entrez `http://localhost:8080`
+5. **Créez DEUX applications** : une pour le compte source, une pour le target
+6. Notez les `Client ID` et `Client Secret` pour chaque
+
 ## Lancement
 
 ```bash
@@ -77,7 +90,7 @@ LOG_LEVEL=INFO
 source venv/bin/activate
 
 # Lancer l'application TUI
-python -m spotify_migrator
+spotify-migrator
 ```
 
 ## Utilisation de la TUI
@@ -93,6 +106,7 @@ L'écran d'accueil affiche:
 
 | Option | Description |
 |--------|-------------|
+| Configuration | Configurer les identifiants Spotify |
 | Authentifier compte SOURCE | Authentifier le compte source |
 | Authentifier compte TARGET | Authentifier le compte target |
 | Lister les playlists source | Voir les playlists du compte source |
@@ -128,6 +142,7 @@ L'écran d'accueil affiche:
 | `↑` / `↓` | Navigation dans les listes |
 | `Enter` | Sélectionner |
 | `←` / `Esc` | Retour / Annuler |
+| `Ctrl+C` | Coller depuis le presse-papier |
 
 ## Tests
 
@@ -146,45 +161,54 @@ pytest tests/test_services/ -v
 ## Structure du projet
 
 ```
-spotify_migrator/
+spotify_playlist_migration/
 ├── src/spotify_migrator/
-│   ├── __init__.py          # Exports
-│   ├── __main__.py          # Entry point
-│   ├── models/              # Modèles de données
+│   ├── __init__.py
+│   ├── __main__.py
+│   ├── models/
+│   │   ├── __init__.py
 │   │   ├── track.py
 │   │   ├── playlist.py
 │   │   └── migration.py
-│   ├── auth/                # Authentification OAuth2
+│   ├── auth/
+│   │   ├── __init__.py
 │   │   ├── manager.py
 │   │   └── exceptions.py
-│   ├── api/                 # Client Spotify API
+│   ├── api/
+│   │   ├── __init__.py
 │   │   ├── client.py
 │   │   └── exceptions.py
-│   ├── services/            # Logique métier
+│   ├── services/
+│   │   ├── __init__.py
 │   │   ├── migrator.py
 │   │   └── pagination.py
-│   ├── store/               # Stockage tokens/config
+│   ├── store/
+│   │   ├── __init__.py
 │   │   ├── token_store.py
 │   │   └── config_store.py
-│   └── tui/                 # Interface TUI
+│   └── tui/
+│       ├── __init__.py
 │       ├── app.py
 │       ├── screens/
+│       │   ├── __init__.py
 │       │   ├── home.py
 │       │   ├── auth.py
 │       │   ├── playlists.py
 │       │   ├── migrate.py
-│       │   └── logs.py
+│       │   ├── logs.py
+│       │   └── setup.py
 │       └── widgets/
+│           ├── __init__.py
 │           ├── status.py
 │           ├── playlist_list.py
 │           └── progress.py
-└── tests/                   # Tests unitaires
-    ├── test_models/
-    ├── test_auth/
-    ├── test_api/
-    ├── test_services/
-    ├── test_store/
-    └── test_tui/
+├── tests/
+│   ├── __init__.py
+│   └── conftest.py
+├── pyproject.toml
+├── requirements.txt
+├── requirements-dev.txt
+└── README.md
 ```
 
 ## Limitations connues
